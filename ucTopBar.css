@@ -1,0 +1,127 @@
+/*------------------------------------------------------------------------------------------------*
+ | Collapses tab bar and gets nav bar & window controls to coexist nicely and reflect Firefox's   |
+ | fault behavior & the user's chosen theme.                                                      |
+ *--------------------------------*---------------------------------------------------------------*
+ | Originally by Giri Srinivasan. | Last tested on Firefox 124.                                   |
+ *--------------------------------*---------------------------------------------------------------*/
+
+:root {
+  --uc-tabbar-height: 40px;
+  --uc-navbar-drag-space: 40px;
+  --uc-inactive-opacity: 50%;
+
+  &[uidensity="touch"] {
+    --uc-tabbar-height: 44px;
+    --uc-navbar-drag-space: 44px;
+  }
+}
+@media (-moz-platform: windows) {
+  :root {
+    --uc-control-button-width: 36px;
+    --uc-private-indicator-width: 129px;
+
+    &[uidensity="touch"] {
+      --uc-control-button-width: 38px;
+    }
+  }
+}
+@media (-moz-platform: macos) {
+  :root {
+    --uc-control-buttons-width: 78px;
+    --uc-private-indicator-width: 128px;
+  }
+}
+
+#TabsToolbar-customization-target {
+  display: none;
+}
+#TabsToolbar {
+  min-height: var(--uc-tabbar-height) !important;
+  max-height: var(--uc-tabbar-height);
+}
+#nav-bar {
+  margin-top: calc(-1*var(--uc-tabbar-height));
+}
+
+@media (-moz-platform: windows) {
+  #TabsToolbar .titlebar-button {
+    width: var(--uc-control-button-width);
+  }
+  :root[privatebrowsingmode="temporary"] #nav-bar {
+    margin-right: var(--uc-private-indicator-width);
+  }
+  :root[inFullscreen] {
+    #nav-bar {
+      margin-right: calc(3*var(--uc-control-button-width));
+    }
+    &[privatebrowsingmode="temporary"] #nav-bar {
+      margin-right: calc(3*var(--uc-control-button-width) + var(--uc-private-indicator-width));
+    }
+  }
+  :root:not([inFullscreen], :has(#toolbar-menubar[autohide="false"]))[chromemargin] {
+    #nav-bar {
+      margin-right: calc(3*var(--uc-control-button-width) + var(--uc-navbar-drag-space));
+      /*margin-left: var(--uc-navbar-drag-space);*/
+    }
+    &[privatebrowsingmode="temporary"] #nav-bar {
+      margin-right: calc(
+        3*var(--uc-control-button-width) + var(--uc-private-indicator-width)
+        + var(--uc-navbar-drag-space)
+      );
+    }
+  }
+}
+
+@media (-moz-platform: macos) {
+  :root[privatebrowsingmode="temporary"] #nav-bar {
+    margin-right: var(--uc-private-indicator-width);
+  }
+  :root:not([inFullscreen])[chromemargin] {
+    #nav-bar {
+      margin-left: calc(var(--uc-control-buttons-width) + var(--uc-navbar-drag-space));
+      /*margin-right: var(--uc-navbar-drag-space);*/
+    }
+    &[privatebrowsingmode="temporary"] #nav-bar {
+      margin-right: calc(var(--uc-private-indicator-width) + var(--uc-navbar-drag-space));
+    }
+  }
+}
+
+#nav-bar {
+  background-color: transparent !important;
+
+  .toolbarbutton-1 {
+    opacity: 1 !important;
+    overflow: hidden;
+
+    &::before {
+      content: '';
+      position: absolute;
+      width: calc(var(--panel-and-palette-icon-size) + 2*var(--toolbarbutton-inner-padding));
+      height: calc(var(--panel-and-palette-icon-size) + 2*var(--toolbarbutton-inner-padding));
+      background-color: var(--toolbar-bgcolor);
+      border-radius: var(--toolbarbutton-border-radius);
+    }
+    > :is(.toolbarbutton-icon, .toolbarbutton-badge-stack) {
+      z-index: 1;
+    }
+    :root:not([customizing]) &[disabled] > :is(.toolbarbutton-icon, .toolbarbutton-badge-stack) {
+      opacity: var(--toolbarbutton-disabled-opacity);
+    }
+    &:not(:hover):-moz-window-inactive, :root:not([customizing]) &[disabled]:-moz-window-inactive {
+      > :is(.toolbarbutton-icon, .toolbarbutton-badge-stack) {
+        opacity: var(--uc-inactive-opacity);
+      }
+    }
+  }
+  toolbarpaletteitem {
+    opacity: 1 !important;
+
+    &[removable="false"] > .toolbarbutton-1 > :is(.toolbarbutton-icon, .toolbarbutton-badge-stack) {
+      opacity: var(--uc-inactive-opacity);
+    }
+  }
+}
+#urlbar:not([focused="true"]) #urlbar-input-container {
+  border: 1px solid var(--toolbar-bgcolor) !important;
+}

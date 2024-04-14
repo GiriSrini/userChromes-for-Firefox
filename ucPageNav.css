@@ -1,0 +1,119 @@
+/*------------------------------------------------------------------------------------------------*
+ | Styles the forward button as an extension of the back button, and also hides it whenever it is |
+ | disabled.                                                                                      |
+ *--------------------------------*---------------------------------------------------------------*
+ | Originally by Giri Srinivasan. | Last tested on Firefox 124.                                   |
+ *--------------------------------*---------------------------------------------------------------*/
+
+:root {
+  --uc-navbar-forward-transition: 200ms;
+  --uc-navbar-pagenav-inreach: 1.5px;
+  --uc-navbar-forward-hide-delay: 200ms;
+}
+
+#nav-bar {
+  #back-button:has(+ #forward-button:not([disabled])), :root[customizing] & #back-button,
+  #forward-button:not([disabled]), :root[customizing] & #forward-button {
+    &, &::before, > :is(.toolbarbutton-icon, .toolbarbutton-badge-stack) {
+      transition-delay: 0ms;
+    }
+    > :is(.toolbarbutton-icon, .toolbarbutton-badge-stack) {
+      width: calc(
+        2*var(--toolbarbutton-inner-padding) + 16px + var(--uc-navbar-pagenav-inreach)
+      ) !important;
+    }
+  }
+
+  #back-button {
+    transition: padding var(--uc-navbar-forward-transition) var(--uc-navbar-forward-hide-delay);
+
+    &::before {
+      transition: padding var(--uc-navbar-forward-transition) var(--uc-navbar-forward-hide-delay),
+                  border-radius calc(var(--uc-navbar-forward-transition)/2)
+                                calc(
+                                  var(--uc-navbar-forward-hide-delay)
+                                  + var(--uc-navbar-forward-transition)/2
+                                );
+    }
+    > :is(.toolbarbutton-icon, .toolbarbutton-badge-stack) {
+      transition: width var(--uc-navbar-forward-transition) var(--uc-navbar-forward-hide-delay),
+                  padding var(--uc-navbar-forward-transition) var(--uc-navbar-forward-hide-delay),
+                  border-radius calc(var(--uc-navbar-forward-transition)/2)
+                                calc(
+                                  var(--uc-navbar-forward-hide-delay)
+                                  + var(--uc-navbar-forward-transition)/2
+                                );
+    }
+    &:has(+ #forward-button:not([disabled])), :root[customizing] & #back-button {
+      padding-right: calc(
+        var(--toolbarbutton-outer-padding) - var(--uc-navbar-pagenav-inreach)
+      ) !important;
+
+      &::before {
+        border-top-right-radius: 0;
+        border-bottom-right-radius: 0;
+        padding-right: var(--uc-navbar-pagenav-inreach);
+      }
+      > :is(.toolbarbutton-icon, .toolbarbutton-badge-stack) {
+        border-top-right-radius: 0 !important;
+        border-bottom-right-radius: 0 !important;
+        padding-right: calc(
+          var(--toolbarbutton-inner-padding) + var(--uc-navbar-pagenav-inreach)
+        ) !important;
+      }
+    }
+  }
+
+  #forward-button {
+    overflow: hidden;
+    /* Initial width specification is necessary for the transition to be smooth, seemingly. */
+    width: calc(2*(var(--toolbarbutton-inner-padding) + var(--toolbarbutton-outer-padding)) + 16px);
+    padding-left: calc(
+      var(--toolbarbutton-outer-padding) - var(--uc-navbar-pagenav-inreach)
+    ) !important;
+    transition-property: width, padding;
+    transition-duration: var(--uc-navbar-forward-transition);
+    transition-delay: var(--uc-navbar-forward-hide-delay);
+
+    &::before, > :is(.toolbarbutton-icon, .toolbarbutton-badge-stack) {
+      transition: width var(--uc-navbar-forward-transition) var(--uc-navbar-forward-hide-delay),
+                  padding var(--uc-navbar-forward-transition) var(--uc-navbar-forward-hide-delay),
+                  border-radius calc(var(--uc-navbar-forward-transition)/2)
+                                calc(
+                                  var(--uc-navbar-forward-hide-delay)
+                                  + var(--uc-navbar-forward-transition)/2
+                                );
+    }
+    &::before {
+      padding-left: var(--uc-navbar-pagenav-inreach);
+    }
+    > :is(.toolbarbutton-icon, .toolbarbutton-badge-stack) {
+      padding-left: calc(
+        var(--toolbarbutton-inner-padding) + var(--uc-navbar-pagenav-inreach)
+      ) !important;
+    }
+
+    &:not([disabled]), :root[customizing] & {
+      &::before {
+        border-top-left-radius: 0;
+        border-bottom-left-radius: 0;
+      }
+      > :is(.toolbarbutton-icon, .toolbarbutton-badge-stack) {
+        border-top-left-radius: 0 !important;
+        border-bottom-left-radius: 0 !important;
+      }
+    }
+    :root:not([customizing]) &[disabled] {
+      padding-left: 0 !important;
+      padding-right: 0 !important;
+
+      &, &::before {
+        width: 0;
+      }
+      &::before {
+        padding-left: 0;
+        padding-right: 0;
+      }
+    }
+  }
+}

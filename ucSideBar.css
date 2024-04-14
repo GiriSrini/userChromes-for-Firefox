@@ -1,0 +1,119 @@
+/*------------------------------------------------------------------------------------------------*
+ | Turns sidebar into a (semi-)permanent fixture & adds the ability for it to collapse & expand.  |
+ *--------------------------------*---------------------------------------------------------------*
+ | Originally by Giri Srinivasan. | Last tested on Firefox 124.                                   |
+ *--------------------------------*---------------------------------------------------------------*/
+
+:root {
+  --uc-sidebar-collapsed: 40px;
+  --uc-sidebar-transition: 200ms;
+  --uc-sidebar-open-delay: 50ms;
+  --uc-sidebar-close-delay: 200ms;
+  --uc-sidebar-overlap-shadow-length: 8px;
+  --uc-sidebar-overlap-shadow-opacity: 50%;
+
+  &[uidensity="touch"] {
+    --uc-sidebar-collapsed: 44px;
+  }
+  &[inFullscreen] {
+    --uc-sidebar-collapsed: 1px;
+  }
+}
+
+#sidebar-header {
+  padding-top: 0 !important;
+  padding-bottom: 0 !important;
+  height: var(--uc-tabbar-height); /* Felt about right */
+}
+#sidebar-close {
+  display: none;
+}
+:root[inFullscreen] #sidebar-box, :root:not([inFullscreen]) #sidebar-box[autocollapse] {
+  z-index: 1;
+  overflow: hidden;
+
+  #sidebar-title, #sidebar-switcher-arrow {
+    transition: opacity calc(var(--uc-sidebar-transition)/2)
+                        calc(var(--uc-sidebar-open-delay) + var(--uc-sidebar-transition)/4);
+  }
+  ~ #sidebar-splitter {
+    z-index: 2;
+  }
+  ~ #appcontent {
+    position: relative;
+
+    > #tabbrowser-tabbox {
+      position: absolute;
+      height: 100%;
+    }
+  }
+
+  &:not([positionend="true"]) {
+    ~ #sidebar-splitter {
+      clip-path: inset(0 calc(-1*var(--uc-sidebar-overlap-shadow-length)) 0 0);
+    }
+    ~ #appcontent > #tabbrowser-tabbox {
+      right: 0;
+    }
+  }
+  &[positionend="true"] ~ #sidebar-splitter {
+    clip-path: inset(0 0 0 calc(-1*var(--uc-sidebar-overlap-shadow-length)));
+  }
+
+  &:not(:hover, :has(~ #sidebar-splitter:hover)) {
+    max-width: var(--uc-sidebar-collapsed) !important;
+    min-width: var(--uc-sidebar-collapsed) !important;
+
+    #sidebar-title, #sidebar-switcher-arrow {
+      opacity: 0 !important;
+    }
+  }
+  &:is(:hover, :has(~ #sidebar-splitter:hover)) ~ #sidebar-splitter {
+    box-shadow: 0 0 var(--uc-sidebar-overlap-shadow-length)
+                rgb(0 0 0 / var(--uc-sidebar-overlap-shadow-opacity));
+  }
+}
+:root[inFullscreen] #sidebar-box {
+  transition: max-width var(--uc-sidebar-transition), min-width var(--uc-sidebar-transition),
+              opacity 0ms;
+  transition-delay: var(--uc-sidebar-open-delay);
+
+  ~ #sidebar-splitter {
+    transition: box-shadow var(--uc-sidebar-transition), opacity 0ms;
+    transition-delay: var(--uc-sidebar-open-delay);
+  }
+  ~ #appcontent > #tabbrowser-tabbox {
+    width: 100vw;
+  }
+
+  &:not(:hover, :has(~ #sidebar-splitter:hover)) {
+    opacity: 0;
+    transition-delay: var(--uc-sidebar-close-delay), var(--uc-sidebar-close-delay),
+                      calc(var(--uc-sidebar-close-delay) + var(--uc-sidebar-transition));
+
+    ~ #sidebar-splitter {
+      opacity: 0;
+      transition-delay: var(--uc-sidebar-close-delay),
+                        calc(var(--uc-sidebar-close-delay) + var(--uc-sidebar-transition));
+    }
+  }
+}
+:root:not([inFullscreen]) #sidebar-box[autocollapse] {
+  transition-property: max-width, min-width;
+  transition-duration: var(--uc-sidebar-transition);
+  transition-delay: var(--uc-sidebar-open-delay);
+
+  ~ #sidebar-splitter {
+    transition: box-shadow var(--uc-sidebar-transition) var(--uc-sidebar-open-delay);
+  }
+  ~ #appcontent > #tabbrowser-tabbox {
+    width: calc(100vw - var(--uc-sidebar-collapsed));
+  }
+  &:not(:hover, :has(~ #sidebar-splitter:hover)) {
+    transition-delay: var(--uc-sidebar-close-delay);
+    
+    ~ #sidebar-splitter {
+      transition-delay: var(--uc-sidebar-close-delay);
+    }
+  }
+}
