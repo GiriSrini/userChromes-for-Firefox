@@ -61,7 +61,6 @@
   :root:not([inFullscreen], :has(#toolbar-menubar[autohide="false"]))[chromemargin] {
     #nav-bar {
       margin-right: calc(3*var(--uc-control-button-width) + var(--uc-navbar-drag-space));
-      /*margin-left: var(--uc-navbar-drag-space);*/
     }
     &[privatebrowsingmode="temporary"] #nav-bar {
       margin-right: calc(
@@ -79,10 +78,6 @@
   :root:not([inFullscreen])[chromemargin] {
     #nav-bar {
       margin-left: calc(var(--uc-control-buttons-width) + var(--uc-navbar-drag-space));
-      /*margin-right: var(--uc-navbar-drag-space);*/
-    }
-    &[privatebrowsingmode="temporary"] #nav-bar {
-      margin-right: calc(var(--uc-private-indicator-width) + var(--uc-navbar-drag-space));
     }
   }
 }
