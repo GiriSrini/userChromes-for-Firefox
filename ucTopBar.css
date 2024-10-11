@@ -1,8 +1,8 @@
 /*------------------------------------------------------------------------------------------------*
  | Collapses tab bar and gets nav bar & window controls to coexist nicely and reflect Firefox's   |
- | fault behavior & the user's chosen theme.                                                      |
+ | default behavior & the user's chosen theme.                                                    |
  *--------------------------------*---------------------------------------------------------------*
- | Originally by Giri Srinivasan. | Last tested on Firefox 124.                                   |
+ | Originally by Giri Srinivasan. | Last tested on Firefox 131.                                   |
  *--------------------------------*---------------------------------------------------------------*/
 
 :root {
@@ -14,6 +14,10 @@
     --uc-tabbar-height: 44px;
     --uc-navbar-drag-space: 44px;
   }
+  &[uidensity="compact"] {
+    --uc-tabbar-height: 34px;
+    --uc-navbar-drag-space: 34px;
+  }
 }
 @media (-moz-platform: windows) {
   :root {
@@ -22,6 +26,9 @@
 
     &[uidensity="touch"] {
       --uc-control-button-width: 38px;
+    }
+    &[uidensity="compact"] {
+      --uc-control-button-width: 34px;
     }
   }
 }

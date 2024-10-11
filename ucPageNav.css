@@ -2,7 +2,7 @@
  | Styles the forward button as an extension of the back button, and also hides it whenever it is |
  | disabled.                                                                                      |
  *--------------------------------*---------------------------------------------------------------*
- | Originally by Giri Srinivasan. | Last tested on Firefox 124.                                   |
+ | Originally by Giri Srinivasan. | Last tested on Firefox 131.                                   |
  *--------------------------------*---------------------------------------------------------------*/
 
 :root {
