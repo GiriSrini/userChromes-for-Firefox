@@ -1,7 +1,7 @@
 /*------------------------------------------------------------------------------------------------*
  | Turns sidebar into a (semi-)permanent fixture & adds the ability for it to collapse & expand.  |
  *--------------------------------*---------------------------------------------------------------*
- | Originally by Giri Srinivasan. | Last tested on Firefox 131.                                   |
+ | Originally by Giri Srinivasan. | Last tested on Firefox 132.                                   |
  *--------------------------------*---------------------------------------------------------------*/
 
 :root {
@@ -11,10 +11,17 @@
   --uc-sidebar-open-function: ease-out;
   --uc-sidebar-close-delay: 200ms;
   --uc-sidebar-close-function: ease-in;
-  --uc-sidebar-switcher-allowance: 12px; /* 16px[icon width]/2 + 4px[left pad] */
   --uc-sidebar-overlap-shadow-length: 8px;
   --uc-sidebar-overlap-shadow-opacity: 50%;
 
+  @media not (-moz-platform: macos) {
+    --uc-sidebar-switcher-allowance: 13px;
+    /* ^ 16px[icon width]/2 + 4px[left pad] + 1px[left border] */
+  }
+  @media (-moz-platform: macos) {
+    --uc-sidebar-switcher-allowance: 15px;
+    /* ^ 16px[icon width]/2 + 4px[left pad] + 1px[left border] + 2px[left inline margin] */
+  }
   &[uidensity="touch"] {
     --uc-sidebar-collapsed: 44px;
   }
