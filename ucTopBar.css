@@ -1,9 +1,7 @@
-/*------------------------------------------------------------------------------------------------*
- | Collapses tab bar and gets nav bar & window controls to coexist nicely and reflect Firefox's   |
- | default behavior & the user's chosen theme.                                                    |
- *--------------------------------*---------------------------------------------------------------*
- | Originally by Giri Srinivasan. | Last tested on Firefox 132.                                   |
- *--------------------------------*---------------------------------------------------------------*/
+/**
+ * Collapses tab bar and gets nav bar & window controls to coexist nicely and reflect Firefox's de-
+ * fault behavior & the user's chosen theme.
+ */
 
 :root {
   --uc-tabbar-height: 40px;
