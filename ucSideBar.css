@@ -1,8 +1,6 @@
-/*------------------------------------------------------------------------------------------------*
- | Turns sidebar into a (semi-)permanent fixture & adds the ability for it to collapse & expand.  |
- *--------------------------------*---------------------------------------------------------------*
- | Originally by Giri Srinivasan. | Last tested on Firefox 132.                                   |
- *--------------------------------*---------------------------------------------------------------*/
+/**
+ * Turns sidebar into a (semi-)permanent fixture & adds the ability for it to collapse & expand.
+ */
 
 :root {
   --uc-sidebar-collapsed: 40px;
@@ -86,7 +84,9 @@
       transition-delay: var(--uc-sidebar-close-delay);
     }
   }
-  &:is(:hover, :has(~ #sidebar-splitter:hover)) ~ #sidebar-splitter {
+  &:is(
+    :hover, :has(~ #sidebar-splitter:hover, ~ #sidebar-splitter[state="dragging"])
+  ) ~ #sidebar-splitter {
     box-shadow: 0 0 var(--uc-sidebar-overlap-shadow-length)
                 rgb(0 0 0 / var(--uc-sidebar-overlap-shadow-opacity));
   }

@@ -1,9 +1,7 @@
-/*------------------------------------------------------------------------------------------------*
- | Styles the forward button as an extension of the back button, and also hides it whenever it is |
- | disabled.                                                                                      |
- *--------------------------------*---------------------------------------------------------------*
- | Originally by Giri Srinivasan. | Last tested on Firefox 132.                                   |
- *--------------------------------*---------------------------------------------------------------*/
+/**
+ * Styles the forward button as an extension of the back button, and also hides it whenever it is
+ * disabled.
+ */
 
 :root {
   --uc-navbar-forward-transition: 200ms;

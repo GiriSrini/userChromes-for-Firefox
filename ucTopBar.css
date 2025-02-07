@@ -1,9 +1,7 @@
-/*------------------------------------------------------------------------------------------------*
- | Collapses tab bar and gets nav bar & window controls to coexist nicely and reflect Firefox's   |
- | default behavior & the user's chosen theme.                                                    |
- *--------------------------------*---------------------------------------------------------------*
- | Originally by Giri Srinivasan. | Last tested on Firefox 132.                                   |
- *--------------------------------*---------------------------------------------------------------*/
+/**
+ * Collapses tab bar and gets nav bar & window controls to coexist nicely and reflect Firefox's de-
+ * fault behavior & the user's chosen theme.
+ */
 
 :root {
   --uc-tabbar-height: 40px;
@@ -65,7 +63,7 @@
       margin-right: calc(3*var(--uc-control-button-width) + var(--uc-private-indicator-width));
     }
   }
-  :root:not([inFullscreen], :has(#toolbar-menubar[autohide="false"]))[chromemargin] {
+  :root:not([inFullscreen], :has(#toolbar-menubar[autohide="false"])) {
     #nav-bar {
       margin-right: calc(3*var(--uc-control-button-width) + var(--uc-navbar-drag-space));
     }
@@ -82,7 +80,7 @@
   :root[privatebrowsingmode="temporary"] #nav-bar {
     margin-right: var(--uc-private-indicator-width);
   }
-  :root:not([inFullscreen])[chromemargin] {
+  :root:not([inFullscreen]) {
     #nav-bar {
       margin-left: calc(var(--uc-control-buttons-width) + var(--uc-navbar-drag-space));
     }
