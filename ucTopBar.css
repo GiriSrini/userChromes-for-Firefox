@@ -63,7 +63,7 @@
       margin-right: calc(3*var(--uc-control-button-width) + var(--uc-private-indicator-width));
     }
   }
-  :root:not([inFullscreen], :has(#toolbar-menubar[autohide="false"]))[chromemargin] {
+  :root:not([inFullscreen], :has(#toolbar-menubar[autohide="false"])) {
     #nav-bar {
       margin-right: calc(3*var(--uc-control-button-width) + var(--uc-navbar-drag-space));
     }
@@ -80,7 +80,7 @@
   :root[privatebrowsingmode="temporary"] #nav-bar {
     margin-right: var(--uc-private-indicator-width);
   }
-  :root:not([inFullscreen])[chromemargin] {
+  :root:not([inFullscreen]) {
     #nav-bar {
       margin-left: calc(var(--uc-control-buttons-width) + var(--uc-navbar-drag-space));
     }
